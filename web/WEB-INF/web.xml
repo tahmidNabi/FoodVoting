@@ -23,6 +23,43 @@
         <filter-name>loginFilter</filter-name>
         <filter-class>net.therap.filter.LoginFilter</filter-class>
     </filter>
+    
+    <servlet>
+        <servlet-name>LoginServlet</servlet-name>
+        <servlet-class>net.therap.controller.LoginController</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/Login</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>UserServlet</servlet-name>
+        <servlet-class>net.therap.controller.UserController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>UserServlet</servlet-name>
+        <url-pattern>/Login.do</url-pattern>
+    </servlet-mapping>
+
+    <filter-mapping>
+        <filter-name>loginFilter</filter-name>
+        <servlet-name>UserServlet</servlet-name>
+    </filter-mapping>
+
+    <servlet>
+        <servlet-name>VoteServlet</servlet-name>
+        <servlet-class>net.therap.controller.VoteController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>VoteServlet</servlet-name>
+        <url-pattern>/Vote.do</url-pattern>
+    </servlet-mapping>
+
+
 
     <!-- Put the URL pattern what you want to protect-->
 
@@ -33,7 +70,7 @@
 
 
     <welcome-file-list>
-        <welcome-file>index.jsp</welcome-file>
+        <welcome-file>/Login</welcome-file>
     </welcome-file-list>
 
     <jsp-config>

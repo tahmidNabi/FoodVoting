@@ -15,10 +15,12 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public class LoginDao {
-    static DatabaseTemplate dbTemplate;
+    DatabaseTemplate dbTemplate;
 
 
     public List<User> getUserList() {
+        dbTemplate = DatabaseTemplate.getDatabaseTemplate();
+
         List<User> userList = new ArrayList<User>();
 
         userList = dbTemplate.queryForObject("select * from saima_tahmid_user", new RowObjectMapper<User>() {

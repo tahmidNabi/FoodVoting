@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class VoteServiceImpl implements VoteService {
 
-    public void vote(List<String> foodNameList) {
+    public void vote(String [] foodNameList) {
 
         FoodDao foodDao = new FoodDao();
 

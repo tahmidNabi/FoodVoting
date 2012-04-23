@@ -1,5 +1,12 @@
 package net.therap.dao;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,52 +19,44 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 class DatabaseTemplate {
-    private String databaseUrl;
-    private String databaseUserName;
-    private String databaseUserPassword;
+    private static final Logger log = LoggerFactory.getLogger(DatabaseTemplate.class);
+    Connection connection;
+    static DatabaseTemplate dbTemplate = null;
 
-    public DatabaseTemplate(String databaseUrl, String databaseUserName,String databaseUserPassword) {
-        this.databaseUrl =databaseUrl;
-        this.databaseUserName = databaseUserName;
-        this.databaseUserPassword = databaseUserPassword;
+    public static DatabaseTemplate getDatabaseTemplate() {
 
-    }
+        if (dbTemplate == null) {
+            dbTemplate = new DatabaseTemplate();
+        }
+
+        return dbTemplate;
 
 
-    void setDatabaseUrl(String databaseUrl) {
-        this.databaseUrl = databaseUrl;
-    }
-
-    void setDatabaseUserName(String databaseUserName) {
-        this.databaseUserName = databaseUserName;
-    }
-
-    void setDatabaseUserPassword(String databaseUserPassword) {
-        this.databaseUserPassword = databaseUserPassword;
     }
 
     Connection openConnection() {
-        Connection connection;
-        try {
-            Class.forName("oracle.jdbc.OracleDriver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        try {
-            connection = DriverManager.getConnection(databaseUrl, databaseUserName, databaseUserPassword);
-        } catch (SQLException e) {
+         Context initContext = null;
+         try {
+             initContext = new InitialContext();
+             Context envCtx = (Context) initContext.lookup("java:comp/env");
+             DataSource ds = (DataSource) envCtx.lookup("jdbc/myoracle");
+             connection = ds.getConnection();
 
-            throw new RuntimeException(e);
-        }
+         } catch (NamingException e) {
+             log.debug(e.toString());
+         } catch (SQLException e) {
+             log.debug(e.toString());  //To change body of catch statement use File | Settings | File Templates.
+         }
+
         return connection;
     }
 
 
         void execute(String query) {
-        Connection conToUse = openConnection();
+            openConnection();
         Statement stmt = null;
         try {
-            stmt = conToUse.createStatement();
+            stmt = connection.createStatement();
             stmt.executeQuery(query);
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -67,10 +66,10 @@ class DatabaseTemplate {
                 stmt.close();
             }
             catch (NullPointerException e) {
-                closeConnection(conToUse);
+                closeConnection();
                 throw new RuntimeException(e);
             }catch (SQLException e) {
-                closeConnection(conToUse);
+                closeConnection();
                 throw new RuntimeException(e);
             }
 
@@ -79,12 +78,12 @@ class DatabaseTemplate {
     }
 
     <E> List<E> queryForObject(String query, RowObjectMapper<E> rowObjectMapper) {
-        Connection conToUse = openConnection();
+        openConnection();
         Statement stmt = null;
         ResultSet resultSet = null;
         List<E> listOfE = new ArrayList<E>();
         try {
-            stmt = conToUse.createStatement();
+            stmt = connection.createStatement();
             resultSet = stmt.executeQuery(query);
             while (resultSet.next()) {
                 listOfE.add(rowObjectMapper.mapRowToObject(resultSet));
@@ -98,10 +97,10 @@ class DatabaseTemplate {
                 stmt.close();
             }
             catch (NullPointerException e) {
-                closeConnection(conToUse);
+                closeConnection();
                 throw new RuntimeException(e);
             }catch (SQLException e) {
-                closeConnection(conToUse);
+                closeConnection();
                 throw new RuntimeException(e);
             }
 
@@ -112,10 +111,10 @@ class DatabaseTemplate {
     }
 
     void executeQuery(String query, Object... parameters) {
-        Connection conToUse = openConnection();
+        Connection connection = openConnection();
         PreparedStatement preparedStatement = null;
         try {
-            preparedStatement = conToUse.prepareStatement(query);
+            preparedStatement = connection.prepareStatement(query);
             int i = 1;
             for (Object parameter : parameters) {
                 if (parameter instanceof String) {
@@ -138,18 +137,18 @@ class DatabaseTemplate {
 
                 preparedStatement.close();
             } catch (NullPointerException e) {
-                closeConnection(conToUse);
+                closeConnection();
                 throw new RuntimeException(e);
             } catch (SQLException e) {
-                closeConnection(conToUse);
+                closeConnection();
                 throw new RuntimeException(e);
             }
         }
     }
 
-    void closeConnection(Connection conToClose) {
+    void closeConnection() {
         try {
-            conToClose.close();
+            this.connection.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

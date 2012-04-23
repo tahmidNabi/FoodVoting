@@ -1,6 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://www.opensymphony.com/sitemesh/decorator" prefix="decorator" %>
 
+
+
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 
 <html>
@@ -22,9 +24,13 @@
 
 </head>
 
+<%@include file="header.jsp" %>
+
 <body bgcolor="#F5FFFF">
 
 <decorator:body/>
+
+
 
 <%@ include file="footer.jsp" %>
 

@@ -32,10 +32,11 @@ public class LoginFilter implements Filter {
         String userName = request.getParameter("Name");
         String password = request.getParameter("Password");
 
-        HttpSession session = ((HttpServletRequest) request).getSession(false);
-        if (session == null || session.getAttribute("USER") == null) {
+
+        HttpSession session = ((HttpServletRequest) request).getSession();
+        if (session == null) {
             log.debug("user is not logged in");
-            RequestDispatcher rd = request.getRequestDispatcher("/login");
+            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/login.jsp");
             rd.forward(request, response);
         } else {
             LoginService loginService = new LoginServiceImpl();
@@ -48,7 +49,7 @@ public class LoginFilter implements Filter {
             }
             else {
                log.debug("Username/Password is not valid ");
-               RequestDispatcher rd = request.getRequestDispatcher("/login");
+               RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/login.jsp");
                rd.forward(request, response);
             }
         }

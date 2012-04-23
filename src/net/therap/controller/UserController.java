@@ -1,5 +1,6 @@
 package net.therap.controller;
 
+import net.therap.domain.Food;
 import net.therap.domain.User;
 import net.therap.service.FoodService;
 import net.therap.service.FoodServiceImpl;
@@ -23,7 +24,7 @@ public class UserController extends HttpServlet {
 
         if (session == null || session.getAttribute("USER") == null) {
             log.debug("user is not logged in");
-            RequestDispatcher rd = request.getRequestDispatcher("/login");
+            RequestDispatcher rd = request.getRequestDispatcher("//login.jsp");
             rd.forward(request, response);
         } else {
             User user = (User) session.getAttribute("USER");
@@ -35,15 +36,17 @@ public class UserController extends HttpServlet {
 
             if (user.getType().equals("U")) {
 
-                RequestDispatcher rd = request.getRequestDispatcher("/Vote.jsp");
+                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/Vote.jsp");
                 rd.forward(request, response);
 
             } else if (user.getType().equals("A")) {
 
-                List<Integer> Votes = foodService.getVotes();
-                request.setAttribute("Votes", Votes);
+                //List<Integer> Votes = foodService.getVotes();
+                List<Food> foodList = foodService.populateFoodList();
+                request.setAttribute("foodList",foodList);
+                //request.setAttribute("Votes", Votes);
 
-                RequestDispatcher rd = request.getRequestDispatcher("/Result.jsp");
+                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/Results.jsp");
                 rd.forward(request, response);
             }
 

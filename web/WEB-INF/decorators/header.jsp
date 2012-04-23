@@ -1,6 +1,8 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<br/><br/>
 
-<html>
-  <head><title>Simple jsp page</title></head>
-  <body>Place your content here</body>
-</html>
+<div class="header" align="center">
+    <h1 class="header">Vote for your favorite foods</h1>
+    <div>
+        <h2 class="header"> Please log in to cast your vote </h2>
+    </div>
+</div>

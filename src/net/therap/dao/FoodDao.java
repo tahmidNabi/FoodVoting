@@ -15,10 +15,13 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public class FoodDao {
-     static DatabaseTemplate dbTemplate;
+     DatabaseTemplate dbTemplate;
+
 
 
     public List<Food> getFoodList() {
+        dbTemplate = DatabaseTemplate.getDatabaseTemplate();
+
         List<Food> foodList = new ArrayList<Food>();
 
         foodList = dbTemplate.queryForObject("select * from saima_tahmid_food", new RowObjectMapper<Food>() {
@@ -53,6 +56,8 @@ public class FoodDao {
     }
 
     public void updateVoteCount(String name) {
+
+        dbTemplate = DatabaseTemplate.getDatabaseTemplate();
 
         dbTemplate.executeQuery("update saima_tahmid_food set votecount = votecount + 1 where name = ?", name);
 
