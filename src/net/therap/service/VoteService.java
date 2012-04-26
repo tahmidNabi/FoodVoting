@@ -11,4 +11,8 @@ import java.util.List;
  */
 public interface VoteService {
     public void vote(String [] foodNameList);
+
+    public boolean hasAlreadyVoted(String userName);
+
+    public void insertVote(String userName);
 }

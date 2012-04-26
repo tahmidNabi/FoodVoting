@@ -2,8 +2,16 @@
 
 <decorators defaultdir="/WEB-INF/decorators">
 
+    <decorator name="loginmain" page="loginmain.jsp">
+        <pattern>/Login</pattern>
+    </decorator>
+
     <decorator name="main" page="main.jsp">
         <pattern>/*</pattern>
     </decorator>
 
+
+
 </decorators>
+
+

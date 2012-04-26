@@ -19,7 +19,7 @@
        Food Names: <p>
         <c:forEach var="food" items="${foodNames}">
     
-            <input type=checkbox name=foodNames value=${food}>${food}<br>
+            <input type=radio name=foodNames value=${food}>${food}<br>
 
         </c:forEach>
 

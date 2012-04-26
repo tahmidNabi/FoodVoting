@@ -124,6 +124,9 @@ class DatabaseTemplate {
                 } else if (parameter instanceof Long) {
                     preparedStatement.setLong(i, (Long) parameter);
                 }
+                else if (parameter instanceof  Date) {
+                    preparedStatement.setDate(i, (Date)parameter);
+                }
                 i++;
             }
 

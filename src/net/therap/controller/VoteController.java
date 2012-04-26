@@ -7,8 +7,8 @@ package net.therap.controller;
  * Time: 11:56 AM
  * To change this template use File | Settings | File Templates.
  */
-import net.therap.service.FoodService;
-import net.therap.service.FoodServiceImpl;
+
+import net.therap.domain.User;
 import net.therap.service.VoteService;
 import net.therap.service.VoteServiceImpl;
 import org.slf4j.Logger;
@@ -18,9 +18,8 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.List;
 
-public class VoteController  extends HttpServlet {
+public class VoteController extends HttpServlet {
     private static final Logger log = LoggerFactory.getLogger(VoteController.class);
 
     protected void doPost(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
@@ -33,14 +32,24 @@ public class VoteController  extends HttpServlet {
             rd.forward(request, response);
         } else {
 
-            String [] foodNameList = request.getParameterValues("foodNames");
+            User user = (User) session.getAttribute("USER");
+
+            String[] foodNameList = request.getParameterValues("foodNames");
 
             VoteService voteService = new VoteServiceImpl();
 
-            voteService.vote(foodNameList);
 
+            if (!voteService.hasAlreadyVoted(user.getUserName())) {
+                voteService.vote(foodNameList);
+                voteService.insertVote(user.getUserName());
+                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/VoteSuccess.jsp");
+                rd.forward(request, response);
+            }
+            else {
+                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/VoteError.jsp");
+                rd.forward(request, response);
 
-
+            }
 
 
         }
