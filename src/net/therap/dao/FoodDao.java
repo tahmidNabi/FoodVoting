@@ -30,14 +30,17 @@ public class FoodDao {
 
                 String foodName;
                 int voteCount;
+                String type;
 
                 try {
                     foodName = resultSet.getString("name");
                     voteCount = resultSet.getInt("votecount");
+                    type = resultSet.getString("type");
 
 
                     food.setFoodName(foodName);
                     food.setVoteCount(voteCount);
+                    food.setType(type);
 
 
                 } catch (SQLException e) {

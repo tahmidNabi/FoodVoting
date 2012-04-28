@@ -12,6 +12,26 @@ import java.util.Date;
 public class Vote {
     private String name;
     private Date date;
+    private String type;
+    private String foodName;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getFoodName() {
+        return foodName;
+    }
+
+    public void setFoodName(String foodName) {
+        this.foodName = foodName;
+    }
+
+
 
     public Date getDate() {
         return date;

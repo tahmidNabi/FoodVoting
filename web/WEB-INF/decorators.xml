@@ -4,11 +4,19 @@
 
     <decorator name="loginmain" page="loginmain.jsp">
         <pattern>/Login</pattern>
+        <pattern>/logout</pattern>
     </decorator>
 
-    <decorator name="main" page="main.jsp">
+    <!--<decorator name="main" page="main.jsp">-->
+        <!--<pattern>/Vote.jsp</pattern>-->
+    <!--</decorator>-->
+
+     <decorator name="main" page="main.jsp">
         <pattern>/*</pattern>
+
     </decorator>
+
+
 
 
 

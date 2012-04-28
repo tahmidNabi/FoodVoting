@@ -3,6 +3,7 @@ package net.therap.service;
 import net.therap.domain.Food;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by IntelliJ IDEA.
@@ -17,5 +18,7 @@ public interface FoodService {
     List<String> getFoodNames();
 
     List<Integer> getVotes();
+
+    Map<String, List<Food>> getFoodMap ();
 
 }

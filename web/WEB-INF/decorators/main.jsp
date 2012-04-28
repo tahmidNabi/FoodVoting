@@ -20,6 +20,11 @@
             height: 60px;
 
         }
+
+        fieldset{
+            width:50%
+
+        }
     </style>
 
 </head>

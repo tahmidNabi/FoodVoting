@@ -7,18 +7,28 @@
 <fmt:setBundle basename="messages" />
 
 
+
+
 <html>
 <head><title><fmt:message key="login.title"/></title></head>
 <body>
-<form action="Login.do" method="POST">
+<div style="padding-left:500">
+<form action="Home" method="POST">
 
-    <label>User Name</label> <input name="Name" type="text">
-    <br>
-    <label>Password</label> <input type="password" name="Password">
-    <br>
+    <fieldset>
+        <legend>Log In</legend>
+        Username: <br> <input name="Name" type="text">
+        <br><br>
+        Password: <br> <input type="password" name="Password">
+    <br><br>
     <input type="submit" value=<fmt:message key="login.btn.label"/> />
 
-</form>
+        </fieldset>
 
+</form>
+</div>
+<div style="padding-left:500;font-size:20px">
+    ${loginError}
+</div>
 </body>
 </html>

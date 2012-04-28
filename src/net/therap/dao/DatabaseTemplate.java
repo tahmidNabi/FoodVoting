@@ -20,7 +20,7 @@ import java.util.List;
  */
 class DatabaseTemplate {
     private static final Logger log = LoggerFactory.getLogger(DatabaseTemplate.class);
-    Connection connection;
+    static Connection connection=null;
     static DatabaseTemplate dbTemplate = null;
 
     public static DatabaseTemplate getDatabaseTemplate() {
@@ -40,7 +40,10 @@ class DatabaseTemplate {
              initContext = new InitialContext();
              Context envCtx = (Context) initContext.lookup("java:comp/env");
              DataSource ds = (DataSource) envCtx.lookup("jdbc/myoracle");
-             connection = ds.getConnection();
+             if (connection==null) {
+                 log.debug("Creating a new connection");
+                connection = ds.getConnection();
+             }
 
          } catch (NamingException e) {
              log.debug(e.toString());
@@ -56,6 +59,7 @@ class DatabaseTemplate {
             openConnection();
         Statement stmt = null;
         try {
+
             stmt = connection.createStatement();
             stmt.executeQuery(query);
         } catch (SQLException e) {

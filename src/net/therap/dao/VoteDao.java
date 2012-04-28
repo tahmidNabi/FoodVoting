@@ -30,15 +30,21 @@ public class VoteDao {
 
                 String name;
                 Date date;
+                String type;
+                String foodName;
 
                 try {
                     name = resultSet.getString("name");
                     date = resultSet.getDate("vote_date");
+                    type = resultSet.getString("type");
+                    foodName = resultSet.getString("food_name");
 
 
 
                     vote.setName(name);
                     vote.setDate(date);
+                    vote.setType(type);
+                    vote.setFoodName(foodName);
 
 
 
@@ -57,14 +63,14 @@ public class VoteDao {
 
     }
 
-     public void insertVote(String name) {
+     public void insertVote(String name, String type, String foodName) {
 
         dbTemplate = DatabaseTemplate.getDatabaseTemplate();
 
         java.util.Date today = new java.util.Date();
         java.sql.Date curDate = new java.sql.Date(today.getTime());
 
-        dbTemplate.executeQuery("insert into saima_tahmid_vote values (?,?)", name, curDate);
+        dbTemplate.executeQuery("insert into saima_tahmid_vote values (?,?,?,?)", name, curDate, type, foodName);
 
 
     }

@@ -10,9 +10,9 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public interface VoteService {
-    public void vote(String [] foodNameList);
+    public void updateVoteCount(String foodName);
 
-    public boolean hasAlreadyVoted(String userName);
+    public boolean hasAlreadyVoted(String userName, String type);
 
-    public void insertVote(String userName);
+    public void insertTodaysVote(String userName, String type, String foodName);
 }

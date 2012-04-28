@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 
 public class UserController extends HttpServlet {
@@ -24,7 +25,7 @@ public class UserController extends HttpServlet {
 
         if (session == null || session.getAttribute("USER") == null) {
             log.debug("user is not logged in");
-            RequestDispatcher rd = request.getRequestDispatcher("//login.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("/login.jsp");
             rd.forward(request, response);
         } else {
             User user = (User) session.getAttribute("USER");
@@ -34,6 +35,9 @@ public class UserController extends HttpServlet {
             List<String> foodNames = foodService.getFoodNames();
             request.setAttribute("foodNames", foodNames);
 
+            Map<String, List<Food>> foodMap = foodService.getFoodMap();
+            request.setAttribute("foodMap", foodMap);
+
             if (user.getType().equals("U")) {
 
                 RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/Vote.jsp");
@@ -42,8 +46,8 @@ public class UserController extends HttpServlet {
             } else if (user.getType().equals("A")) {
 
                 //List<Integer> Votes = foodService.getVotes();
-                List<Food> foodList = foodService.populateFoodList();
-                request.setAttribute("foodList",foodList);
+                //List<Food> foodList = foodService.populateFoodList();
+                //request.setAttribute("foodList",foodList);
                 //request.setAttribute("Votes", Votes);
 
                 RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/Results.jsp");

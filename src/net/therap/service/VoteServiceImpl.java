@@ -6,7 +6,6 @@ import net.therap.domain.Vote;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -20,24 +19,22 @@ public class VoteServiceImpl implements VoteService {
 
     private static final Logger log = LoggerFactory.getLogger(VoteServiceImpl.class);
 
-    public void vote(String [] foodNameList) {
-
+    public void updateVoteCount(String foodName) {
         FoodDao foodDao = new FoodDao();
 
-        for (String foodName : foodNameList) {
-             foodDao.updateVoteCount(foodName);
-        }
+        foodDao.updateVoteCount(foodName);
+
 
     }
 
-    public boolean hasAlreadyVoted(String userName) {
+    public boolean hasAlreadyVoted(String userName, String type) {
         VoteDao voteDao = new VoteDao();
 
 
         List<Vote> votes = voteDao.getVoteList();
 
-        for (Vote vote: votes) {
-            if (vote.getName().equals(userName)) {
+        for (Vote vote : votes) {
+            if (vote.getName().equals(userName) && vote.getType().equalsIgnoreCase(type)) {
                 java.util.Date today = new java.util.Date();
                 java.sql.Date curDate = new java.sql.Date(today.getTime());
 
@@ -46,7 +43,7 @@ public class VoteServiceImpl implements VoteService {
                 //log.debug("From table: " + curDate.getYear() + " " + voteDate.getYear());
                 //log.debug("From system " + voteDate);
 
-                if (curDate.getYear()==voteDate.getYear() && curDate.getMonth()==voteDate.getMonth() && curDate.getDay()==voteDate.getDay()) {
+                if (curDate.getYear() == voteDate.getYear() && curDate.getMonth() == voteDate.getMonth() && curDate.getDay() == voteDate.getDay()) {
                     log.debug("Found equal");
                     return true;
                 }
@@ -57,15 +54,15 @@ public class VoteServiceImpl implements VoteService {
         return false;
 
 
-
-
     }
 
-    public void insertVote(String userName) {
+    public void insertTodaysVote(String userName, String type, String foodName) {
 
         VoteDao voteDao = new VoteDao();
+        /*FoodDao foodDao = new FoodDao();
 
-        voteDao.insertVote(userName);
+        foodDao.updateVoteCount(foodName);*/
+        voteDao.insertVote(userName, type, foodName);
 
     }
 }

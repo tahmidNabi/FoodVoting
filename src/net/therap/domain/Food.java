@@ -7,9 +7,20 @@ package net.therap.domain;
  * Time: 3:02 PM
  * To change this template use File | Settings | File Templates.
  */
-public class Food {
+public class Food implements Comparable<Food>{
     private String foodName;
     private int voteCount;
+    private String type;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+
 
 
     public String getFoodName() {
@@ -26,6 +37,20 @@ public class Food {
 
     public void setVoteCount(int voteCount) {
         this.voteCount = voteCount;
+    }
+
+    public int compareTo(Food b) {
+
+        if (this.getVoteCount()<b.getVoteCount()) {
+            return 1;
+        }
+        else if (this.getVoteCount()==b.getVoteCount()) {
+            return 0;
+        }
+        else {
+            return -1;
+        }
+
     }
 
 

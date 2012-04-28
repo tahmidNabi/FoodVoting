@@ -9,27 +9,60 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<fmt:setLocale value="en" />
+<fmt:setBundle basename="messages" />
+
 <html>
-<head><title>Simple jsp page</title></head>
-<body>Vote here
+<head>
+    <title>Vote</title>
+    <style type="text/css">
+        .align-center {
+            display: block;
+            margin: 1.0em auto;
+            text-align: left;
+        }
 
-<form method="POST" action="Vote.do">
-    Vote for foods:
-    <p>
-       Food Names: <p>
-        <c:forEach var="food" items="${foodNames}">
-    
-            <input type=radio name=foodNames value=${food}>${food}<br>
+    </style>
+</head>
+<body>
 
-        </c:forEach>
+
+<div>
+    <form method="POST" action="Vote">
+        <fieldset class="align-center">
+            <legend>
+            <span style="font-size:25px;color:	#2F4F4F">Vote</span>
+            </legend>
+
+                <c:forEach var="item" items="${foodMap}">
+
+                    <fieldset class="align-center">
+                        <legend>
+                            ${item.key}
+
+
+                        </legend>
+
+                        <c:forEach var="food" items="${item.value}">
+
+                            <input style="align:left" type=radio name=${item.key} value=${food.foodName}>${food.foodName}<br>
+
+                        </c:forEach>
+                    </fieldset>
+
+
+                </c:forEach>
+            </div>
+        </fieldset>
 
 
         <br><br>
-    <center>
-        <input type="SUBMIT" value="Submit">
-    </center>
-</form>
+        <center>
+            <input type="SUBMIT" value=<fmt:message key="common.submit"/> />
+        </center>
 
+    </form>
+</div>
 
 
 </body>

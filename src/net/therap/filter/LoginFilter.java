@@ -34,6 +34,7 @@ public class LoginFilter implements Filter {
 
 
         HttpSession session = ((HttpServletRequest) request).getSession();
+        String message="";
         if (session == null) {
             log.debug("user is not logged in");
             RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/login.jsp");
@@ -49,6 +50,8 @@ public class LoginFilter implements Filter {
             }
             else {
                log.debug("Username/Password is not valid ");
+               message="Username/Password is not valid ";
+               request.setAttribute("loginError",message);
                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/login.jsp");
                rd.forward(request, response);
             }

@@ -41,7 +41,7 @@
 
     <servlet-mapping>
         <servlet-name>UserServlet</servlet-name>
-        <url-pattern>/Login.do</url-pattern>
+        <url-pattern>/Home</url-pattern>
     </servlet-mapping>
 
     <filter-mapping>
@@ -56,7 +56,7 @@
 
     <servlet-mapping>
         <servlet-name>VoteServlet</servlet-name>
-        <url-pattern>/Vote.do</url-pattern>
+        <url-pattern>/Vote</url-pattern>
     </servlet-mapping>
     
     <servlet>

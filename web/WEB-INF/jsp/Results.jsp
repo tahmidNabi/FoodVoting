@@ -12,22 +12,22 @@
 
 <html>
 <head>
-    <title>Simple jsp page</title>
+    <title>Results</title>
     <style type="text/css">
-        #foodtable {
+        .foodTable {
             font-family: Arial;
             width: 50%;
             margin: auto;
         }
 
-        #foodtable td {
+        .foodTable td {
             border: 1px solid #4169E1;
             font-size: 1em;
             padding: 8px 1px;
             text-align: center;
         }
 
-        #foodtable th {
+        .foodTable th {
             background-color: #A9A9A9;
             color: #FFFFFF;
             font-size: 1.1em;
@@ -41,14 +41,19 @@
 
 
 </head>
-<body>Results here
+<body>
 
-<table id="foodtable">
+<c:forEach var="item" items="${foodMap}">
+
+<table class="foodTable">
+    <caption>
+        <span style="font-size:20px">${item.key}</span>
+    </caption>
     <tr>
         <th>Name</th>
         <th>Votes</th>
     </tr>
-    <c:forEach var="food" items="${foodList}">
+    <c:forEach var="food" items="${item.value}">
         <tr>
             <td>
                     ${food.foodName}
@@ -62,6 +67,8 @@
 
 
 </table>
+    </br></br>
+</c:forEach>
 
 
 </body>

@@ -9,6 +9,9 @@
 <html>
 <head><title>Successfully voted</title></head>
 <body>
-    <strong style="font:18">Your vote has been received. Thank you. Come Again tomorrow!</strong>
+    <strong style="font:18">
+        ${successMessage}
+        ${errorMessage}
+    </strong>
 </body>
 </html>
